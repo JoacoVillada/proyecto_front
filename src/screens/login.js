@@ -14,7 +14,7 @@ import { PassInput } from "../components/passinput";
 import { Botonn } from "../components/boton";
 import { loginCheck } from "../apis/login";
 
-export default Login = () => {
+export default Login = ({ navigation }) => {
   const [dni, setDni] = useState();
   const [password, setPassword] = useState();
 
@@ -23,6 +23,7 @@ export default Login = () => {
 
     const Data = await loginCheck(dni, password);
     console.log(Data.token);
+    navigation.navigate("tabs");
   };
 
   return (
