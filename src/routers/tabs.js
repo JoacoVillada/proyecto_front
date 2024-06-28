@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, ImageBackground } from "react";
 
 import { BottomNavigation } from "react-native-paper";
 import Home from "../screens/home";

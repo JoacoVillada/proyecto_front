@@ -13,17 +13,25 @@ import { useState } from "react";
 import { PassInput } from "../components/passinput";
 import { Botonn } from "../components/boton";
 import { loginCheck } from "../apis/login";
+import { save } from "../utils/storage";
 
 export default Login = ({ navigation }) => {
   const [dni, setDni] = useState();
   const [password, setPassword] = useState();
+  const [error, setError] = useState();
 
   const handleValidar = async () => {
     //comprobar success, guardar el token, enviarme a la siguiente pantalla
-
     const Data = await loginCheck(dni, password);
-    console.log(Data.token);
-    navigation.navigate("tabs");
+    console.log("data TOKEN ------", Data.token);
+
+    if (Data.success) {
+      const result = await save("token", Data.token);
+      console.log("nashe");
+      navigation.navigate("tabs");
+    } else {
+      setError(Data.message);
+    }
   };
 
   return (
@@ -62,7 +70,7 @@ export default Login = ({ navigation }) => {
             <Input
               label="ingrese su dni"
               value={dni}
-              onChage={setDni}
+              onChange={setDni}
               icon="alien"
               type="numeric"
             />
@@ -71,9 +79,17 @@ export default Login = ({ navigation }) => {
               value={password}
               onChange={setPassword}
             />
-
+            {error ? (
+              <Text style={{ fontSize: 35, color: "red", textAlign: "center" }}>
+                {error}
+              </Text>
+            ) : null}
             <Botonn title="ingresar" onPress={() => handleValidar()} />
-            <Botonn title="crear cuenta" mode="outlined" />
+            <Botonn
+              title="Crear cuenta"
+              mode="outlined"
+              onPress={() => navigation.navigate("Singup")} // Navegar a la vista de registro
+            />
           </View>
           <View style={styles.olvide}>
             <Text>proximamente</Text>

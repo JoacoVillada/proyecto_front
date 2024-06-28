@@ -1,8 +1,10 @@
 import { login } from "../config/urlapis";
 
 export const loginCheck = async (dni, password) => {
-  //peticion a la url
-  console.log(dni, password);
+  // Comprobación de la entrada
+  console.log("DNI:", dni, "Password:", password);
+
+  // Petición a la URL
   const res = await fetch(login, {
     method: "POST",
     headers: {
@@ -10,6 +12,9 @@ export const loginCheck = async (dni, password) => {
     },
     body: JSON.stringify({ dni, password }),
   });
-  //devolver la respues del servidor
-  return await res.json();
+
+  // Devolver la respuesta del servidor
+  const jsonResponse = await res.json();
+  console.log("Respuesta del servidor:", jsonResponse);
+  return jsonResponse;
 };
